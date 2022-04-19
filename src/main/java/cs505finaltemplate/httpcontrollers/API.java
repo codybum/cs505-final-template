@@ -82,7 +82,7 @@ public class API {
     @GET
     @Path("/reset")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getteam() {
+    public Response reset() {
         String responseString = "{}";
         try {
             Map<String,String> responseMap = new HashMap<>();
@@ -106,7 +106,7 @@ public class API {
     @GET
     @Path("/zipalertlist")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getteam() {
+    public Response zipalertlist() {
         String responseString = "{}";
         try {
             Map<String,String> responseMap = new HashMap<>();
