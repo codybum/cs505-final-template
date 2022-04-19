@@ -36,9 +36,9 @@ public class API {
         try {
             System.out.println("WHAT");
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("team_name", "templateTeam");
-            responseMap.put("Team_members_sids", "[0]");
-            responseMap.put("app_status_code","0");
+            responseMap.put("team_name", "Chimkin");
+            responseMap.put("Team_members_sids", "[912206804]");
+            responseMap.put("app_status_code","1");
 
             responseString = gson.toJson(responseMap);
 
