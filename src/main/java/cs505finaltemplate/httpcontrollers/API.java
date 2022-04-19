@@ -78,6 +78,54 @@ public class API {
         }
         return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
     }
+    
+    @GET
+    @Path("/reset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getteam() {
+        String responseString = "{}";
+        try {
+            Map<String,String> responseMap = new HashMap<>();
+            responseMap.put("reset_status_code", "0"); //placeholder as it has yet to do anything
+
+            responseString = gson.toJson(responseMap);
+
+
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+    }
+    
+    @GET
+    @Path("/zipalertlist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getteam() {
+        String responseString = "{}";
+        try {
+            Map<String,String> responseMap = new HashMap<>();
+            responseMap.put("ziplist", "ERROR");
+
+            responseString = gson.toJson(responseMap);
+
+
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+    }
 
 
 }
