@@ -96,6 +96,32 @@ public class CEPEngine {
         }
     }
 
+    public int dropTable(String tableName) {
+        int result = -1;
+        try {
+            Connection conn = ds.getConnection();
+            try {
+                String stmtString = null;
+
+                stmtString = "DROP TABLE " + tableName;
+
+                Statement stmt = conn.createStatement();
+
+                result = stmt.executeUpdate(stmtString);
+
+                stmt.close();
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            } finally {
+                conn.close();
+            }
+
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
 
     private String getSourceString(String inputStreamAttributesString, String topic, String streamName) {
         String sourceString = null;
