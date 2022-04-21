@@ -86,11 +86,8 @@ public class API {
         String responseString = "{}";
         try {
             
-            String insertQuery = "DROP TABLE testInStream;";
-            Launcher.dbEngine.executeUpdate(insertQuery);
-            
-            String insertQuery = "DROP TABLE testOutStream;";
-            Launcher.dbEngine.executeUpdate(insertQuery);
+            Launcher.dbEngine.executeUpdate("DROP TABLE testInStream;");
+            Launcher.dbEngine.executeUpdate("DROP TABLE testOutStream;");
             
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("reset_status_code", "1");
