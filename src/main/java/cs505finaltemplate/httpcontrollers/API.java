@@ -85,8 +85,15 @@ public class API {
     public Response reset() {
         String responseString = "{}";
         try {
+            
+            String insertQuery = "DROP TABLE testInStream;";
+            Launcher.dbEngine.executeUpdate(insertQuery);
+            
+            String insertQuery = "DROP TABLE testOutStream;";
+            Launcher.dbEngine.executeUpdate(insertQuery);
+            
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("reset_status_code", "0"); //placeholder as it has yet to do anything
+            responseMap.put("reset_status_code", "1");
 
             responseString = gson.toJson(responseMap);
 
@@ -97,6 +104,11 @@ public class API {
             ex.printStackTrace(new PrintWriter(sw));
             String exceptionAsString = sw.toString();
             ex.printStackTrace();
+            
+            Map<String,String> responseMap = new HashMap<>();
+            responseMap.put("reset_status_code", "0");
+
+            responseString = gson.toJson(responseMap);
 
             return Response.status(500).entity(exceptionAsString).build();
         }
