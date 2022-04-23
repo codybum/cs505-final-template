@@ -87,6 +87,7 @@ public class TopicConnector {
 
                     //insert into CEP
                     Launcher.cepEngine.input("testInStream",testInput);
+                    System.out.println(testInput);
 
                     //do something else with each record
                     /*
