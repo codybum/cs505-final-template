@@ -86,9 +86,6 @@ public class API {
         String responseString = "{}";
         try {
             
-            Launcher.cepEngine.dropTable("testInStream");
-            Launcher.cepEngine.dropTable("testOutStream");
-            
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("reset_status_code", "1");
 
