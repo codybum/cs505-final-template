@@ -1,4 +1,4 @@
-package cs505finaltemplate.CEP;
+package cs505final.CEP;
 
 import com.google.gson.Gson;
 import io.siddhi.core.SiddhiAppRuntime;

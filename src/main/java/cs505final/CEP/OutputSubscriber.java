@@ -1,9 +1,9 @@
-package cs505finaltemplate.CEP;
+package cs505final.CEP;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import cs505finaltemplate.Launcher;
+import cs505final.Launcher;
 import io.siddhi.core.util.transport.InMemoryBroker;
 
 import java.lang.reflect.Type;
@@ -109,7 +109,7 @@ public class OutputSubscriber implements InMemoryBroker.Subscriber {
             d.put("55555","1");
         }
         */
-        
+
         return d;
     }
 

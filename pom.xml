@@ -11,8 +11,8 @@
 
 
     <properties>
-        <jarName>final-template</jarName>
-        <mainClass>cs505finaltemplate.Launcher</mainClass>
+        <jarName>final</jarName>
+        <mainClass>cs505final.Launcher</mainClass>
         <jersey.version>2.22.2</jersey.version>
         <derby.version>10.14.2.0</derby.version>
         <jdk>1.8</jdk>
@@ -27,6 +27,18 @@
 
 
     <dependencies>
+
+	<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.orientechnologies</groupId>
@@ -137,7 +149,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cs505finaltemplate.Launcher</mainClass>
+                            <mainClass>cs505final.Launcher</mainClass>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>

@@ -1,8 +1,9 @@
-package cs505finaltemplate;
+package cs505final;
 
-import cs505finaltemplate.CEP.CEPEngine;
-import cs505finaltemplate.Topics.TopicConnector;
-import cs505finaltemplate.graphDB.GraphDBEngine;
+import cs505final.CEP.CEPEngine;
+import cs505final.Topics.TopicConnector;
+import cs505final.graphDB.GraphDBEngine;
+import cs505final.database.DBEngine;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,6 +21,7 @@ public class Launcher {
 
     public static GraphDBEngine graphDBEngine;
     public static String inputStreamName;
+    public static DBEngine dbEngine;
     public static CEPEngine cepEngine;
     public static TopicConnector topicConnector;
     public static final int WEB_PORT = 8082;
@@ -33,11 +35,12 @@ public class Launcher {
     public static void main(String[] args) throws IOException {
 
 
-        //startig DB/CEP init
+        //starting DB/CEP init
 
         //READ CLASS COMMENTS BEFORE USING
         //graphDBEngine = new GraphDBEngine();
 
+        dbEngine = new DBEngine();
         cepEngine = new CEPEngine();
 
         System.out.println("Starting CEP...");
@@ -48,8 +51,7 @@ public class Launcher {
         String outputStreamName = "testOutStream";
         String outputStreamAttributesString = "zip_code string, count long";
 
-        //This query must be modified.  Currently, it provides the last zip_code and total count
-        //You want counts per zip_code, to say another way "grouped by" zip_code
+        //Grouped by zip code.
         String queryString = " " +
                 "from testInStream#window.timeBatch(15 sec) " +
                 "select zip_code, count(*) as count " +
@@ -77,7 +79,7 @@ public class Launcher {
 
         try {
             while (true) {
-                Thread.sleep(5000);
+                Thread.sleep(15000);
             }
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -87,7 +89,7 @@ public class Launcher {
     private static void startServer() throws IOException {
 
         final ResourceConfig rc = new ResourceConfig()
-        .packages("cs505finaltemplate.httpcontrollers");
+        .packages("cs505final.httpcontrollers");
 
         System.out.println("Starting Web Server...");
         URI BASE_URI = UriBuilder.fromUri("http://0.0.0.0/").port(WEB_PORT).build();

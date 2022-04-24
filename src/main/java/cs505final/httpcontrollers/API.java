@@ -1,7 +1,7 @@
-package cs505finaltemplate.httpcontrollers;
+package cs505final.httpcontrollers;
 
 import com.google.gson.Gson;
-import cs505finaltemplate.Launcher;
+import cs505final.Launcher;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
