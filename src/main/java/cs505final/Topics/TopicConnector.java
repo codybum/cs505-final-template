@@ -99,6 +99,7 @@ public class TopicConnector {
                     System.out.println("\tcontact_list = " + testingData.contact_list);
                     System.out.println("\tevent_list = " + testingData.event_list);
                     
+                    
                     String queryString = null;
                     queryString = "INSERT INTO patient_list " +
                     "VALUES " +
@@ -108,8 +109,8 @@ public class TopicConnector {
                     testingData.patient_zipcode + " " +
                     testingData.patient_status;
 
-                    Launcher.dbEngine.execute(queryString);
-
+                    Launcher.dbEngine.executeUpdate(queryString);
+                    
                 }
 
             };

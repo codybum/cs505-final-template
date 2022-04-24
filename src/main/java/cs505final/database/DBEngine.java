@@ -223,26 +223,4 @@ public class DBEngine {
         return exist;
     }
 
-    public void execute(String q){
-        try {
-
-            try(Connection conn = ds.getConnection()) {
-                try (Statement stmt = conn.createStatement()) {
-
-                    try(ResultSet rs = stmt.executeQuery(q)) {
-
-                        while (rs.next()) {
-                            System.out.println(rs);
-                        }
-
-                    }
-                }
-            }
-
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
 }
