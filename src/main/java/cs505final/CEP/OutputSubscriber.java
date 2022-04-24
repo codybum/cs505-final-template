@@ -93,6 +93,8 @@ public class OutputSubscriber implements InMemoryBroker.Subscriber {
         for (int i = 0; i < sstr.length-1; i+=2) {
             d.put(sstr[i], sstr[i+1]);
         }
+
+        /*
         if (test){
             d.put("11111","2");
             d.put("22222","2");
@@ -106,6 +108,8 @@ public class OutputSubscriber implements InMemoryBroker.Subscriber {
             d.put("44444","1");
             d.put("55555","1");
         }
+        */
+        
         return d;
     }
 
