@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class Launcher {
@@ -22,7 +24,11 @@ public class Launcher {
     public static TopicConnector topicConnector;
     public static final int WEB_PORT = 8082;
 
+    public static String beforeCEPOutput = "{}";
     public static String lastCEPOutput = "{}";
+    public static List<String> alerts = new ArrayList<String>();
+    public static Boolean state_alert = false;
+
 
     public static void main(String[] args) throws IOException {
 
@@ -45,8 +51,9 @@ public class Launcher {
         //This query must be modified.  Currently, it provides the last zip_code and total count
         //You want counts per zip_code, to say another way "grouped by" zip_code
         String queryString = " " +
-                "from testInStream#window.timeBatch(5 sec) " +
-                "select zip_code, count() as count " +
+                "from testInStream#window.timeBatch(1 sec) " +
+                "select zip_code, count(*) as count " +
+                "group by zip_code " +
                 "insert into testOutStream; ";
 
         cepEngine.createCEP(inputStreamName, outputStreamName, inputStreamAttributesString, outputStreamAttributesString, queryString);

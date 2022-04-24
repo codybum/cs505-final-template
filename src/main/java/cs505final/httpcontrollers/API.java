@@ -34,13 +34,13 @@ public class API {
     public Response getteam() {
         String responseString = "{}";
         try {
-            System.out.println("WHAT");
             Map<String,String> responseMap = new HashMap<>();
             responseMap.put("team_name", "Chimkin");
             responseMap.put("Team_members_sids", "[912206804]");
             responseMap.put("app_status_code","1");
 
             responseString = gson.toJson(responseMap);
+            System.out.println(responseMap);
 
 
         } catch (Exception ex) {
@@ -64,8 +64,7 @@ public class API {
 
             //generate a response
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("lastoutput",Launcher.lastCEPOutput);
-            responseString = gson.toJson(responseMap);
+            responseString = Launcher.lastCEPOutput;
 
         } catch (Exception ex) {
 
@@ -87,7 +86,7 @@ public class API {
         try {
             
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("reset_status_code", "1");
+            responseMap.put("reset_status_code", "0");
 
             responseString = gson.toJson(responseMap);
 
@@ -112,11 +111,40 @@ public class API {
     @GET
     @Path("/zipalertlist")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response zipalertlist() {
+    public Response zipalertlist(@HeaderParam("X-Auth-API-Key") String authKey) {
         String responseString = "{}";
         try {
+
+            //generate a response
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("ziplist", "ERROR");
+            responseMap.put("ziplist",Launcher.alerts.toString());
+            responseString = gson.toJson(responseMap);
+
+        } catch (Exception ex) {
+
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            ex.printStackTrace();
+
+            return Response.status(500).entity(exceptionAsString).build();
+        }
+        return Response.ok(responseString).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    @GET
+    @Path("/alertlist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response alertlist() {
+        String responseString = "{}";
+        try {
+            
+            String s = "0";
+            if (Launcher.state_alert)
+                s = "1";
+            
+            Map<String,String> responseMap = new HashMap<>();
+            responseMap.put("state_status", s);
 
             responseString = gson.toJson(responseMap);
 
