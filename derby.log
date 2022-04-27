@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Apr 26 23:29:07 EDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0180-6910-bf36-00000e4dc088 
+on database directory memory:/Users/ztc0611/Documents/GitHub/cs505-final/myDatabase with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
+Loaded from file:/Users/ztc0611/Documents/GitHub/cs505-final/target/cs505-final-1.0-SNAPSHOT.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_311-b11
+user.dir=/Users/ztc0611/Documents/GitHub/cs505-final
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

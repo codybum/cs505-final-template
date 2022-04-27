@@ -59,6 +59,7 @@ public class OutputSubscriber implements InMemoryBroker.Subscriber {
 
             Launcher.state_alert = (Launcher.alerts.size() > 4);
 
+            System.out.println("");
             System.out.println("PREV OUTPUT CEP EVENT: " + beforeDict.toString());
             System.out.println("OUTPUT CEP EVENT: " + lastDict.toString());
             System.out.println("ZIPS ON ALERT: " + Launcher.alerts.toString());

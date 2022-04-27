@@ -85,8 +85,26 @@ public class API {
         String responseString = "{}";
         try {
             
+            String queryString = "DROP TABLE vax_list";
+
+            System.out.println(queryString);
+            Launcher.dbEngine.executeUpdate(queryString);
+
+            queryString = "DROP TABLE hospital_list";
+
+            System.out.println(queryString);
+            Launcher.dbEngine.executeUpdate(queryString);
+
+            queryString = "DROP TABLE patient_list";
+
+            System.out.println(queryString);
+            Launcher.dbEngine.executeUpdate(queryString);
+
+            Launcher.dbEngine.initDB();
+
+
             Map<String,String> responseMap = new HashMap<>();
-            responseMap.put("reset_status_code", "0");
+            responseMap.put("reset_status_code", "1");
 
             responseString = gson.toJson(responseMap);
 

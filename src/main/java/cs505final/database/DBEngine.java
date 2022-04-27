@@ -104,22 +104,49 @@ public class DBEngine {
 
     public void initDB() {
 
+        System.out.println("initDB");
+
         String createRNode = "CREATE TABLE patient_list" +
                 "(" +
-                "   testing_id SMALLINT(4)," +
-                "   patient_name VARCHAR(100)" +
-                "   patient_mrn VARCHAR(72)" +
-                "   patient_zipcode CHAR(5)" +
-                "   patient_status BOOL" +
+                "   testing_id       CHAR(4)," +
+                "   patient_name     VARCHAR(50)," +
+                "   patient_mrn      VARCHAR(72)," +
+                "   patient_zipcode  CHAR(5)," +
+                "   patient_status   BOOLEAN" +
                 ")";
+
+        System.out.println(createRNode);
+
+        String createRNode2 = "CREATE TABLE hospital_list" +
+                "(" +
+                "   hospital_id         VARCHAR(10)," +
+                "   patient_name        VARCHAR(50)," +
+                "   patient_mrn         VARCHAR(72)," +
+                "   patient_hp_status   CHAR(1)" +
+                ")";
+
+        System.out.println(createRNode2);
+
+        String createRNode3 = "CREATE TABLE vax_list" +
+                "(" +
+                "   vaccination_id    CHAR(4)," +
+                "   patient_name      VARCHAR(50)," +
+                "   patient_mrn       VARCHAR(72)" +
+                ")";
+
+        System.out.println(createRNode3);
 
         try {
             try(Connection conn = ds.getConnection()) {
                 try (Statement stmt = conn.createStatement()) {
                     stmt.executeUpdate(createRNode);
+                    stmt.executeUpdate(createRNode2);
+                    stmt.executeUpdate(createRNode3);
+                    System.out.println("!!!!!!!!!!!embedded table creation success");
                 }
             }
         } catch(Exception ex) {
+            System.out.println("!!!!!!!!!!!!!Pain");
             ex.printStackTrace();
         }
     }

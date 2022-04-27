@@ -40,8 +40,8 @@ public class Launcher {
         //READ CLASS COMMENTS BEFORE USING
         //graphDBEngine = new GraphDBEngine();
 
-        dbEngine = new DBEngine();
         cepEngine = new CEPEngine();
+        dbEngine = new DBEngine();
 
         System.out.println("Starting CEP...");
 

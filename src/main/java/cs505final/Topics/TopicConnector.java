@@ -90,6 +90,7 @@ public class TopicConnector {
 
                     //do something else with each record
                     
+                    /*
                     System.out.println("*Java Class*");
                     System.out.println("\ttesting_id = " + testingData.testing_id);
                     System.out.println("\tpatient_name = " + testingData.patient_name);
@@ -98,17 +99,20 @@ public class TopicConnector {
                     System.out.println("\tpatient_status = " + testingData.patient_status);
                     System.out.println("\tcontact_list = " + testingData.contact_list);
                     System.out.println("\tevent_list = " + testingData.event_list);
-                    
-                    
-                    String queryString = null;
-                    queryString = "INSERT INTO patient_list " +
-                    "VALUES " +
-                    testingData.testing_id + " " +
-                    testingData.patient_name + " " +
-                    testingData.patient_mrn + " " +
-                    testingData.patient_zipcode + " " +
-                    testingData.patient_status;
+                    */
 
+                    Boolean positive = (testingData.patient_status == 1);
+
+                    String queryString = 
+                    "INSERT INTO patient_list VALUES(" +
+
+                    "'" + testingData.testing_id + "', " +
+                    "'" + testingData.patient_name + "', " +
+                    "'" + testingData.patient_mrn + "', " +
+                    "'" + testingData.patient_zipcode + "', " +
+                    "'" + positive + "')";
+
+                    System.out.println(queryString);
                     Launcher.dbEngine.executeUpdate(queryString);
                     
                 }
@@ -151,6 +155,17 @@ public class TopicConnector {
                     String patient_mrn = hospitalData.get("patient_mrn");
                     int patient_status = Integer.parseInt(hospitalData.get("patient_status"));
                     //do something with each each record.
+
+                    String queryString = 
+                    "INSERT INTO hospital_list VALUES(" +
+
+                    "'" + hospital_id + "', " +
+                    "'" + patient_name + "', " +
+                    "'" + patient_mrn + "', " +
+                    "'" + patient_status + "')";
+
+                    System.out.println(queryString);
+                    Launcher.dbEngine.executeUpdate(queryString);
                 }
 
             };
@@ -190,6 +205,16 @@ public class TopicConnector {
                     String patient_name = vaxData.get("patient_name");
                     String patient_mrn = vaxData.get("patient_mrn");
                     //do something with each each record.
+
+                    String queryString = 
+                    "INSERT INTO vax_list VALUES(" +
+
+                    "'" + vaccination_id + "', " +
+                    "'" + patient_name + "', " +
+                    "'" + patient_mrn + "')";
+
+                    System.out.println(queryString);
+                    Launcher.dbEngine.executeUpdate(queryString);
                 }
 
             };
