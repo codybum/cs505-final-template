@@ -1,5 +1,9 @@
 package cs505finaltemplate.Topics;
 
+import com.orientechnologies.orient.core.db.ODatabaseSession;
+import com.orientechnologies.orient.core.record.OEdge;
+import com.orientechnologies.orient.core.record.OVertex;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rabbitmq.client.Channel;
@@ -58,8 +62,8 @@ public class TopicConnector {
 
     private void patientListChannel(Channel channel) {
         try {
-
-            System.out.println("Creating patient_list channel");
+	    
+	    System.out.println("Creating patient_list channel");
 
             String topicName = "patient_list";
 
@@ -75,31 +79,42 @@ public class TopicConnector {
 
                 String message = new String(delivery.getBody(), "UTF-8");
 
+		Launcher.graphDBEngine.db.activateOnCurrentThread();
 
                 List<TestingData> incomingList = gson.fromJson(message, typeListTestingData);
-                for (TestingData testingData : incomingList) {
+                for (TestingData testingData : incomingList) {	
 
-                    //Data to send to CEP
-                    Map<String,String> zip_entry = new HashMap<>();
-                    zip_entry.put("zip_code",String.valueOf(testingData.patient_zipcode));
-                    String testInput = gson.toJson(zip_entry);
-                    //uncomment for debug
-                    //System.out.println("testInput: " + testInput);
+		    OVertex patient = Launcher.graphDBEngine.createPatient(testingData.patient_mrn, -1, -1);
+		    //for(String contact : testingData.contact_list){
+			//OVertex c = Launcher.graphDBEngine.createPatient(contact, -1, -1);
+			
+			//OEdge cEdge = patient.addEdge(c, "contact_with");
+			//cEdge.save();
+		    //}
 
-                    //insert into CEP
-                    Launcher.cepEngine.input("testInStream",testInput);
+		    if(testingData.patient_status == 1) {
+			//Data to send to CEP
+			Map<String,String> zip_entry = new HashMap<>();
+                    	zip_entry.put("zip_code",String.valueOf(testingData.patient_zipcode));
+                    	String testInput = gson.toJson(zip_entry);
+                    	//uncomment for debug
+                    	//System.out.println("testInput: " + testInput);
 
-                    //do something else with each record
-                    /*
-                    System.out.println("*Java Class*");
-                    System.out.println("\ttesting_id = " + testingData.testing_id);
-                    System.out.println("\tpatient_name = " + testingData.patient_name);
-                    System.out.println("\tpatient_mrn = " + testingData.patient_mrn);
-                    System.out.println("\tpatient_zipcode = " + testingData.patient_zipcode);
-                    System.out.println("\tpatient_status = " + testingData.patient_status);
-                    System.out.println("\tcontact_list = " + testingData.contact_list);
-                    System.out.println("\tevent_list = " + testingData.event_list);
-                     */
+                    	//insert into CEP
+                    	Launcher.cepEngine.input("testInStream",testInput);
+
+                    	//do something else with each record
+                    	/*
+                    	System.out.println("*Java Class*");
+                    	System.out.println("\ttesting_id = " + testingData.testing_id);
+                    	System.out.println("\tpatient_name = " + testingData.patient_name);
+                    	System.out.println("\tpatient_mrn = " + testingData.patient_mrn);
+                    	System.out.println("\tpatient_zipcode = " + testingData.patient_zipcode);
+                    	System.out.println("\tpatient_status = " + testingData.patient_status);
+                    	System.out.println("\tcontact_list = " + testingData.contact_list);
+               	     	System.out.println("\tevent_list = " + testingData.event_list);
+                    	 */
+		    }
                 }
 
             };

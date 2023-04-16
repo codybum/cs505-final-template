@@ -1,6 +1,7 @@
 package cs505finaltemplate.graphDB;
 
 import com.orientechnologies.orient.core.db.ODatabaseSession;
+import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
@@ -13,20 +14,14 @@ import com.orientechnologies.orient.core.sql.executor.OResultSet;
 public class GraphDBEngine {
 
 
+	public static OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
+        public static ODatabaseSession db = orient.open("test", "root", "rootpwd");
+
     //!!! CODE HERE IS FOR EXAMPLE ONLY, YOU MUST CHECK AND MODIFY!!!
-    public GraphDBEngine() {
+    public GraphDBEngine() {}
 
-        //launch a docker container for orientdb, don't expect your data to be saved unless you configure a volume
-        //docker run -d --name orientdb -p 2424:2424 -p 2480:2480 -e ORIENTDB_ROOT_PASSWORD=rootpwd orientdb:3.0.0
-
-        //use the orientdb dashboard to create a new database
-        //see class notes for how to use the dashboard
-
-
-        OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-        ODatabaseSession db = orient.open("test", "root", "rootpwd");
-
-        clearDB(db);
+    public void startDB(){
+	clearDB(db);
 
         //create classes
         OClass patient = db.getClass("patient");
@@ -36,19 +31,28 @@ public class GraphDBEngine {
         }
 
         if (patient.getProperty("patient_mrn") == null) {
-            patient.createProperty("patient_mrn", OType.STRING);
-            patient.createIndex("patient_name_index", OClass.INDEX_TYPE.NOTUNIQUE, "patient_mrn");
+            //patient.createProperty("patient_mrn", OType.STRING).setMandatory(true).setNotNull(true);
+            //patient.createIndex("patient_mrn_index", OClass.INDEX_TYPE.UNIQUE, "patient_mrn");
+	    patient.createProperty("patient_mrn", OType.STRING);
+	    patient.createIndex("patient_mrn_index", OClass.INDEX_TYPE.NOTUNIQUE, "patient_mrn");
         }
 
-        if (db.getClass("contact_with") == null) {
+        if (patient.getProperty("hospital_status") == null) {
+            patient.createProperty("hospital_status", OType.INTEGER);
+        }
+
+        if (patient.getProperty("vax_status") == null) {
+            patient.createProperty("vax_status", OType.INTEGER);
+        }
+
+	if (db.getClass("contact_with") == null) {
             db.createEdgeClass("contact_with");
         }
-
-
-        OVertex patient_0 = createPatient(db, "mrn_0");
-        OVertex patient_1 = createPatient(db, "mrn_1");
-        OVertex patient_2 = createPatient(db, "mrn_2");
-        OVertex patient_3 = createPatient(db, "mrn_3");
+	/*
+	OVertex patient_0 = createPatient("mrn_0", -1, -1);
+        OVertex patient_1 = createPatient("mrn_1", -1, -1);
+        OVertex patient_2 = createPatient("mrn_2", -1, -1);
+        OVertex patient_3 = createPatient("mrn_3", -1, -1);
 
         //patient 0 in contact with patient 1
         OEdge edge1 = patient_0.addEdge(patient_1, "contact_with");
@@ -62,15 +66,20 @@ public class GraphDBEngine {
         edge3.save();
 
         getContacts(db, "mrn_0");
-
-        db.close();
-        orient.close();
-
+	*/
     }
 
-    private OVertex createPatient(ODatabaseSession db, String patient_mrn) {
-        OVertex result = db.newVertex("patient");
+    public void endDB(){
+    	db.close();
+        orient.close();
+    }
+
+    //public OVertex createPatient(ODatabaseSession db, String patient_mrn, int hospital_status, int vax_status) {
+    public OVertex createPatient(String patient_mrn, int hospital_status, int vax_status) {    
+    	OVertex result = db.newVertex("patient");
         result.setProperty("patient_mrn", patient_mrn);
+	result.setProperty("hospital_status", hospital_status);
+	result.setProperty("vax_status", vax_status);
         result.save();
         return result;
     }
